@@ -17,7 +17,7 @@ John John Florence	moved from the farm	to CF - DEN - JARVICE
 
     expected_result =
     <<-EXPECTED
-New Hires
+New Faces
 (DEN) John John Florence, new CF Pivot, joining JARVICE
 
 Rotations

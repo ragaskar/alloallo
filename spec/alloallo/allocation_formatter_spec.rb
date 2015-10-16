@@ -40,10 +40,8 @@ Going on Vacation
     string = AlloAllo::AllocationFormatter.new.format(allocations)
     expected_result =
     <<-EXPECTED
-New Hires
+New Faces
 (#{new_hire.office}) #{new_hire.name}, new CF Pivot, joining #{new_hire.to}
-
-New Labs Pivots
 (#{new_labs_pivot.office}) #{new_labs_pivot.name}, new Labs Pivot, joining #{new_labs_pivot.to}
 
 Exits

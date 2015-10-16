@@ -15,8 +15,7 @@ module AlloAllo
 
     def format(allocations)
       [
-        render_section("New Hires", allocations.select { |a| [AlloAllo::Allocation::NEW_HIRE].include?(a.type) }),
-        render_section("New Labs Pivots", allocations.select { |a| [AlloAllo::Allocation::NEW_LABS_PIVOT].include?(a.type) }),
+        render_section("New Faces", allocations.select { |a| [AlloAllo::Allocation::NEW_HIRE, AlloAllo::Allocation::NEW_LABS_PIVOT].include?(a.type) }),
         render_section("Exits", allocations.select { |a| [AlloAllo::Allocation::LEAVING_THE_COMPANY, AlloAllo::Allocation::BACK_TO_LABS].include?(a.type) }),
         render_section("Rotations", allocations.select { |a| a.type == AlloAllo::Allocation::ROTATION }),
         render_section("Going on Vacation", allocations.select { |a| a.type == AlloAllo::Allocation::LEAVING_ON_VACATION }),
