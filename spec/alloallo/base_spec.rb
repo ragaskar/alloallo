@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'tempfile'
 require 'alloallo/base'
-describe AlloAllo::Base do
 
+describe AlloAllo::Base do
   it "nicely formats a chunk of text from allocations" do
     chunk = <<-CHUNK
 
@@ -21,7 +21,7 @@ New Hires
 (DEN) John John Florence, new CF Pivot, joining JARVICE
 
 Rotations
-(SF -> CHI) Kelly Slater moves from Routing (Cloud Foundry OSS) to Lattice
+(SF -> CHI) Kelly Slater moves from Routing to Lattice
     EXPECTED
     expect(result).to eql expected_result.chomp
   end

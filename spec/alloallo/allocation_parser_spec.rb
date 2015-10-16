@@ -5,7 +5,7 @@ describe AlloAllo::AllocationParser do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from CF - LDN - Services	to CF - LDN - Enablement (Cloud Foundry)");
     expect(allocation.from).to eq "Services"
-    expect(allocation.to).to eq "Enablement (Cloud Foundry)"
+    expect(allocation.to).to eq "Enablement"
     expect(allocation.type).to eql AlloAllo::Allocation::ROTATION
   end
 
@@ -73,10 +73,18 @@ describe AlloAllo::AllocationParser do
     allocation = parser.parse("CJ Hobgood	moved from CF - LDN - Services	to CF - LDN - Enablement (Cloud Foundry)");
     expect(allocation.office).to eql "LDN"
   end
+
   it "identifies when there is a cross office move" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from CF - LDN - Services	to CF - TOR - Enablement (Cloud Foundry)");
     expect(allocation.office).to eql "LDN -> TOR"
+  end
+
+  it "strips extraneous (Cloud Foundry) and (Cloud Foundry OSS) from project names" do
+    parser = AlloAllo::AllocationParser.new
+    allocation = parser.parse("CJ Hobgood	moved from CF - LDN - Services (Cloud Foundry OSS)	to CF - TOR - Enablement (Cloud Foundry)");
+    expect(allocation.from).to eq "Services"
+    expect(allocation.to).to eq "Enablement"
   end
 end
 
