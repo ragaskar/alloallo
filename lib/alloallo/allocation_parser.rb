@@ -1,7 +1,9 @@
 require_relative 'allocation'
-class AlloAllo
+module AlloAllo
+  class InvalidAllocationStringError < ArgumentError; end
   class AllocationParser
     def parse(allocation_string)
+      raise InvalidAllocationStringError.new("Not an allocation string") if allocation_string.strip.empty?
       result = allocation_string.match(/(.*)\s+moved from\s+(.*)\s+to\s+(.*)/)
       name = result[1]
       raw_from = result[2].strip

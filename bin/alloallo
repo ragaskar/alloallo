@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+begin
+  require 'alloallo'
+rescue LoadError
+  require 'rubygems'
+  require 'alloallo'
+end
+
+puts AlloAllo::Base.new.format(ARGF)
+

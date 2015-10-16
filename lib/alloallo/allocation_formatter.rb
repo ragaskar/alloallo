@@ -1,5 +1,5 @@
 require_relative 'allocation'
-class AlloAllo
+module AlloAllo
   class AllocationFormatter
     def initialize
       @strings = {
@@ -21,7 +21,7 @@ class AlloAllo
         render_section("Rotations", allocations.select { |a| a.type == AlloAllo::Allocation::ROTATION }),
         render_section("Going on Vacation", allocations.select { |a| a.type == AlloAllo::Allocation::LEAVING_ON_VACATION }),
         render_section("Returning from Vacation", allocations.select { |a| a.type == AlloAllo::Allocation::RETURNING_FROM_VACATION })
-      ].join("\n\n")
+      ].compact.join("\n\n")
     end
 
     private
@@ -34,7 +34,7 @@ class AlloAllo
     end
 
     def render_section(section_title, allocations)
-      return "" unless allocations.any?
+      return nil unless allocations.any?
       "#{section_title}\n#{allocations.map { |a| format_allocation(a) }.join("\n")}"
     end
   end

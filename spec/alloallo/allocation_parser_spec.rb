@@ -9,6 +9,11 @@ describe AlloAllo::AllocationParser do
     expect(allocation.type).to eql AlloAllo::Allocation::ROTATION
   end
 
+  it "raises an error for empty lines" do
+    parser = AlloAllo::AllocationParser.new
+    expect { parser.parse("     ") }.to raise_error(AlloAllo::InvalidAllocationStringError)
+  end
+
   it "identifies if the allocation is going on vacation" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from  CF - LDN - Services	to  vacation");

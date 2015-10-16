@@ -7,6 +7,24 @@ describe AlloAllo::AllocationFormatter do
   def allocation_factory(type)
     AlloAllo::Allocation.new(type: type, name: Faker::Name.name, office: ["SF", "NYC", "LDN", "TOR"].sample, from: "Some Project", to: "Some Other Project")
   end
+
+  it "skips sections with no allocations" do
+    vacation = allocation_factory(AlloAllo::Allocation::LEAVING_ON_VACATION)
+    rotation1 = allocation_factory(AlloAllo::Allocation::ROTATION)
+    allocations = [vacation, rotation1]
+    #eventually we can pass different default strings to new
+    string = AlloAllo::AllocationFormatter.new.format(allocations)
+    expected_result =
+    <<-EXPECTED
+Rotations
+(#{rotation1.office}) #{rotation1.name} moves from #{rotation1.from} to #{rotation1.to}
+
+Going on Vacation
+(#{vacation.office}) #{vacation.name} taking a vacation from #{vacation.from}
+    EXPECTED
+    expect(string).to eql expected_result.chomp
+  end
+
   it "outputs a pretty summary of Allocations" do
     vacation = allocation_factory(AlloAllo::Allocation::LEAVING_ON_VACATION)
     returning_vacation = allocation_factory(AlloAllo::Allocation::RETURNING_FROM_VACATION)

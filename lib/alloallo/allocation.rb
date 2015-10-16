@@ -1,4 +1,4 @@
-class AlloAllo
+module AlloAllo
   class Allocation
     ROTATION = :rotation
     LEAVING_ON_VACATION = :leaving_on_vacation
