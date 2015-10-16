@@ -4,11 +4,13 @@ class AlloAllo
     def parse(allocation_string)
       result = allocation_string.match(/(.*)\s+moved from\s+(.*)\s+to\s+(.*)/)
       name = result[1]
-      from = result[2]
-      to = result[3]
-      type = get_type(from, to)
-      office = get_office(from, to)
-      Allocation.new(type: type, name: name, office: office)
+      raw_from = result[2].strip
+      raw_to = result[3].strip
+      type = get_type(raw_from, raw_to)
+      office = get_office(raw_from, raw_to)
+      pretty_from = strip_cf_from_project(raw_from)
+      pretty_to = strip_cf_from_project(raw_to)
+      Allocation.new(type: type, name: name, office: office, from: pretty_from, to: pretty_to)
     end
 
     private
@@ -22,6 +24,11 @@ class AlloAllo
       return AlloAllo::Allocation::NEW_LABS_PIVOT if !from.include?("CF")
       return AlloAllo::Allocation::BACK_TO_LABS if !to.include?("CF")
       return AlloAllo::Allocation::ROTATION
+    end
+
+    def strip_cf_from_project(project_string)
+      return project_string unless project_string.include?("CF")
+      project_string.match(/CF - (.*) - (.*)/)[2]
     end
 
     def get_office(from, to)

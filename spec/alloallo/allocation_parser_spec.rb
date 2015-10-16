@@ -4,6 +4,8 @@ describe AlloAllo::AllocationParser do
   it "identifies if the allocation is a rotation" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from CF - LDN - Services	to CF - LDN - Enablement (Cloud Foundry)");
+    expect(allocation.from).to eq "Services"
+    expect(allocation.to).to eq "Enablement (Cloud Foundry)"
     expect(allocation.type).to eql AlloAllo::Allocation::ROTATION
   end
 
@@ -11,36 +13,48 @@ describe AlloAllo::AllocationParser do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from  CF - LDN - Services	to  vacation");
     expect(allocation.type).to eql AlloAllo::Allocation::LEAVING_ON_VACATION
+    expect(allocation.from).to eq "Services"
+    expect(allocation.to).to eq "vacation"
   end
 
   it "identifies if the allocation is returning from vacation" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from  vacation	to  CF - LDN - Services");
     expect(allocation.type).to eql AlloAllo::Allocation::RETURNING_FROM_VACATION
+    expect(allocation.from).to eq "vacation"
+    expect(allocation.to).to eq "Services"
   end
 
   it "identifies if the allocation is leaving the company" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from  CF - LDN - Services to  the farm");
     expect(allocation.type).to eql AlloAllo::Allocation::LEAVING_THE_COMPANY
+    expect(allocation.from).to eq "Services"
+    expect(allocation.to).to eq "the farm"
   end
 
   it "identifies if the allocation is rolling off to a Labs project" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from CF - LDN - Services  to Some Non Prefixed Project");
     expect(allocation.type).to eql AlloAllo::Allocation::BACK_TO_LABS
+    expect(allocation.from).to eq "Services"
+    expect(allocation.to).to eq "Some Non Prefixed Project"
   end
 
   it "identifies if the allocation is a new hire" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from the farm to CF - LDN - Services");
     expect(allocation.type).to eql AlloAllo::Allocation::NEW_HIRE
+    expect(allocation.from).to eq "the farm"
+    expect(allocation.to).to eq "Services"
   end
 
   it "identifies if the allocation is a new Labs pivot" do
     parser = AlloAllo::AllocationParser.new
     allocation = parser.parse("CJ Hobgood	moved from Some Non Prefixed Project  to CF - LDN - Services");
     expect(allocation.type).to eql AlloAllo::Allocation::NEW_LABS_PIVOT
+    expect(allocation.from).to eq "Some Non Prefixed Project"
+    expect(allocation.to).to eq "Services"
   end
 
   it "identifies the Pivot name" do
