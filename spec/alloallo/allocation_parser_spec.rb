@@ -86,5 +86,12 @@ describe AlloAllo::AllocationParser do
     expect(allocation.from).to eq "Services"
     expect(allocation.to).to eq "Enablement"
   end
+
+  it "handles projects that include CF but are otherwise 'improperly' formatted (don't match the CF - * - * pattern)" do
+    parser = AlloAllo::AllocationParser.new
+    allocation = parser.parse("CJ Hobgood	moved from GF - LDN - Services CF	to CF - TOR - Enablement (Cloud Foundry)");
+    expect(allocation.from).to eq "GF - LDN - Services CF"
+    expect(allocation.to).to eq "Enablement"
+  end
 end
 

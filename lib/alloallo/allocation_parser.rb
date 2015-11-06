@@ -29,8 +29,9 @@ module AlloAllo
     end
 
     def strip_cf_from_project(project_string)
-      return project_string unless project_string.include?("CF")
-      project_string.match(/CF - (.*) - (.*)/)[2].
+      cf_project_string = extract_project(project_string)
+      return project_string unless cf_project_string
+      cf_project_string.
         gsub("(Cloud Foundry)", "").
         gsub("(Cloud Foundry OSS)", "").strip
     end
@@ -42,8 +43,15 @@ module AlloAllo
     end
 
     def parse_office(string)
-      return nil unless string.include?("CF")
-      string.match(/CF - (.*) -/)[1]
+      extract_office_and_project(string)[1]
+    end
+
+    def extract_project(string)
+      extract_office_and_project(string)[2]
+    end
+
+    def extract_office_and_project(string)
+      string.match(/CF - (.*) - (.*)/) || []
     end
   end
 end
