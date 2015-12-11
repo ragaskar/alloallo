@@ -42,7 +42,7 @@ Going on Vacation
     <<-EXPECTED
 New Faces
 (#{new_hire.office}) #{new_hire.name}, new CF Pivot, joining #{new_hire.to}
-(#{new_labs_pivot.office}) #{new_labs_pivot.name}, new Labs Pivot, joining #{new_labs_pivot.to}
+(#{new_labs_pivot.office}) #{new_labs_pivot.name}, Labs Pivot joining #{new_labs_pivot.to}
 
 Exits
 (#{back_to_labs.office}) #{back_to_labs.name} returns to Labs
