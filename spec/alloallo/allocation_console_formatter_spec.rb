@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'ffaker'
 require 'alloallo/allocation'
-require 'alloallo/allocation_formatter'
-describe AlloAllo::AllocationFormatter do
+require 'alloallo/allocation_console_formatter'
+describe AlloAllo::AllocationConsoleFormatter do
 
   def allocation_factory(type)
     AlloAllo::Allocation.new(type: type, name: Faker::Name.name, office: ["SF", "NYC", "LDN", "TOR"].sample, from: "Some Project", to: "Some Other Project")
@@ -13,7 +13,7 @@ describe AlloAllo::AllocationFormatter do
     rotation1 = allocation_factory(AlloAllo::Allocation::ROTATION)
     allocations = [vacation, rotation1]
     #eventually we can pass different default strings to new
-    string = AlloAllo::AllocationFormatter.new.format(allocations)
+    string = AlloAllo::AllocationConsoleFormatter.new.format(allocations)
     expected_result =
     <<-EXPECTED
 Rotations
@@ -37,7 +37,7 @@ Going on Vacation
 
     allocations = [vacation, returning_vacation, rotation1, rotation2, back_to_labs, exiting, new_hire, new_labs_pivot]
     #eventually we can pass different default strings to new
-    string = AlloAllo::AllocationFormatter.new.format(allocations)
+    string = AlloAllo::AllocationConsoleFormatter.new.format(allocations)
     expected_result =
     <<-EXPECTED
 New Faces

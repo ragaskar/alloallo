@@ -1,14 +1,13 @@
-require_relative 'allocation_formatter'
+require_relative 'allocation_html_formatter'
 require_relative 'allocation_parser'
 
 module AlloAllo
   class Base
     def initialize
       @parser = AlloAllo::AllocationParser.new
-      @formatter = AlloAllo::AllocationFormatter.new
     end
 
-    def format(file_handle)
+    def format(file_handle, formatter = nil)
       allocations = []
       file_handle.each_line do |allocation_string|
         begin
@@ -16,7 +15,7 @@ module AlloAllo
         rescue InvalidAllocationStringError
         end
       end
-      @formatter.format(allocations)
+      (formatter || AlloAllo::AllocationHtmlFormatter.new).format(allocations)
     end
   end
 end
